@@ -1,0 +1,59 @@
+{
+  "name": "nodejs-server-boilerplate-esm",
+  "version": "1.0.7",
+  "description": "Boilerplate for a Node.js Server with MONGODB as database with ESM",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donymvarkey/nodejs-server-boilerplate.git"
+  },
+  "keywords": [
+    "backend",
+    "nodejs",
+    "mongodb",
+    "server",
+    "template"
+  ],
+  "author": "Dony M Varkey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/donymvarkey/nodejs-server-boilerplate.git"
+  },
+  "homepage": "https://github.com/donymvarkey/nodejs-server-boilerplate.git#README",
+  "dependencies": {
+    "colorette": "^2.0.20",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv-flow": "^4.1.0",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "source-map-support": "^0.5.21",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-security": "^3.0.1",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
