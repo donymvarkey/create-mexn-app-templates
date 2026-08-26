@@ -1,20 +1,36 @@
-import { hashSync, genSaltSync, compareSync } from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
-const hashPassword = (password) => {
-  return hashSync(password, genSaltSync(10));
+const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
 };
 
-const comparePassword = (password, hashedPassword) => {
-  return compareSync(password, hashedPassword);
+const comparePassword = async (password, hashedPassword) => {
+  return bcrypt.compare(password, hashedPassword);
 };
 
-const getPaginatedData = async (model, pageNo, size = 10) => {
-  const q = {};
-  q.skip = size * (pageNo - 1);
-  q.limit = size;
-  const data = await model.find({}, {}, q);
-  return data;
+const getPaginatedData = async (model, pageNo = 1, size = 10, filter = {}) => {
+  const page = Math.max(1, parseInt(pageNo, 10) || 1);
+  const limit = Math.max(1, parseInt(size, 10) || 10);
+  const skip = (page - 1) * limit;
+
+  const [data, total] = await Promise.all([
+    model.find(filter).skip(skip).limit(limit),
+    model.countDocuments(filter),
+  ]);
+
+  return {
+    data,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
+
+export { hashPassword, comparePassword, getPaginatedData };
 
 export default {
   hashPassword,

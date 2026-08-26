@@ -1,0 +1,23 @@
+{
+  "name": "create-mexn-app-templates",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo containing backend templates for create-mexn-app",
+  "scripts": {
+    "test:all": "npm --prefix cjs test && npm --prefix esm-js test && npm --prefix esm-ts test",
+    "lint:all": "npm --prefix cjs run lint && npm --prefix esm-js run lint && npm --prefix esm-ts run lint",
+    "lint:fix:all": "npm --prefix cjs run lint:fix && npm --prefix esm-js run lint:fix && npm --prefix esm-ts run lint:fix",
+    "format:check:all": "npm --prefix cjs run format:check && npm --prefix esm-js run format:check && npm --prefix esm-ts run format:check",
+    "format:fix:all": "npm --prefix cjs run format && npm --prefix esm-js run format && npm --prefix esm-ts run format:fix",
+    "build:all": "npm --prefix esm-ts run build"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "templates",
+    "boilerplate"
+  ],
+  "author": "Dony M Varkey",
+  "license": "MIT"
+}

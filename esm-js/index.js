@@ -11,4 +11,7 @@ const options = {
 
 const app = new Server(options);
 
-app.startServer();
+app.startServer().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

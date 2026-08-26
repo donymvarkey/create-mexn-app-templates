@@ -1,10 +1,14 @@
-import { SOMETHING_WENT_WRONG } from '../constants/responseMessages.js';
-import httpResponse from '../utils/httpResponse.js';
-
+import { sendError } from '../utils/responseHandler.js';
 // eslint-disable-next-line no-unused-vars
 const globalErrorhandler = (err, req, res, _next) => {
-  //   res.status(err.statusCode).json(err);
-  httpResponse(req, res, err.statusCode, SOMETHING_WENT_WRONG, err);
+  const statusCode = err && err.statusCode ? err.statusCode : 500;
+  let message = err.message || 'Internal Server Error';
+
+  if (process.env.NODE_ENV !== 'production' && err.stack) {
+    message = message + ' | Trace: ' + err.stack;
+  }
+
+  sendError(res, statusCode, message);
 };
 
 export default globalErrorhandler;

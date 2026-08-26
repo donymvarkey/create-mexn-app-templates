@@ -1,12 +1,11 @@
 import util from 'util';
-import 'winston-mongodb';
 import { createLogger, format, transports } from 'winston';
 import { ConsoleTransportInstance, FileTransportInstance } from 'winston/lib/winston/transports';
-import config from '../config';
+import config from '../config/index.js';
 import path from 'path';
 import { red, blue, yellow, green, magenta } from 'colorette';
-import * as sourceMapSupport from 'source-map-support';
-import { EApplicationEnvironment } from '../constants/application';
+import sourceMapSupport from 'source-map-support';
+import { EApplicationEnvironment } from '../constants/application.js';
 
 // Linking Trace Support
 sourceMapSupport.install();
@@ -55,21 +54,22 @@ const consoleTransport = (): Array<ConsoleTransportInstance> => {
     ];
   }
 
-  return [];
+  return [
+    new transports.Console({
+      level: 'info',
+      format: format.combine(format.timestamp(), format.json())
+    })
+  ];
 };
 
 const fileLogFormat = format.printf((info) => {
-  const { level, message, timestamp } = info;
-
-  const logMeta: Record<string, unknown> = {};
+  const { level, message, timestamp, meta = {} } = info;
 
   const logData = {
     level: level.toUpperCase(),
-
     message,
-
     timestamp,
-    meta: logMeta
+    meta: meta as Record<string, unknown>
   };
 
   return JSON.stringify(logData, null, 4);
@@ -78,7 +78,7 @@ const fileLogFormat = format.printf((info) => {
 const FileTransport = (): Array<FileTransportInstance> => {
   return [
     new transports.File({
-      filename: path.join(__dirname, '../', '../', 'logs', `${config.env}.log`),
+      filename: path.join(process.cwd(), 'logs', `${config.env || 'development'}.log`),
       level: 'info',
       format: format.combine(format.timestamp(), fileLogFormat)
     })

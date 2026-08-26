@@ -34,7 +34,7 @@ type InfoType = {
   level: string;
   message: string;
   timestamp: Date;
-  mta: object;
+  meta: object;
 };
 
 export { ServerOptions, THttpResponse, THttpError, InfoType };

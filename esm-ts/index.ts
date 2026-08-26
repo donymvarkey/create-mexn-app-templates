@@ -1,6 +1,6 @@
-import config from './src/config';
-import Server from './src/Server';
-import { ServerOptions } from './src/types';
+import config from './src/config/index.js';
+import Server from './src/Server.js';
+import { ServerOptions } from './src/types/index.js';
 
 const options: ServerOptions = {
   port: config.port,
@@ -11,4 +11,8 @@ const options: ServerOptions = {
 
 const app = new Server(options);
 
-void app.startServer();
+void app.startServer().catch((err) => {
+  // eslint-disable-next-line no-console
+  console.error(err);
+  process.exit(1);
+});

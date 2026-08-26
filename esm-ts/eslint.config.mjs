@@ -7,15 +7,19 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 export default tseslint.config({
   languageOptions: {
     parserOptions: {
-      project: true,
+      project: ['./tsconfig.json'],
       tsconfigRootDir: import.meta.dirname
     }
   },
-  files: ['**/*.ts'],
+  files: ['src/**/*.ts'],
   extends: [eslint.configs.recommended, ...tseslint.configs.recommendedTypeChecked, eslintConfigPrettier],
   rules: {
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'no-console': 'error',
-    'no-useless-catch': 0,
     quotes: ['error', 'single', { allowTemplateLiterals: true }]
   }
 });

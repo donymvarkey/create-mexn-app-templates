@@ -1,16 +1,14 @@
-const responseMessages = require('../constants/responseMessages');
-const httpResponse = require('../utils/httpResponse');
-
+const { sendError } = require('../utils/responseHandler');
 // eslint-disable-next-line no-unused-vars
 const globalErrorhandler = (err, req, res, _next) => {
-  //   res.status(err.statusCode).json(err);
-  httpResponse(
-    req,
-    res,
-    err.statusCode,
-    responseMessages.SOMETHING_WENT_WRONG,
-    err,
-  );
+  const statusCode = err && err.statusCode ? err.statusCode : 500;
+  let message = err.message || 'Internal Server Error';
+
+  if (process.env.NODE_ENV !== 'production' && err.stack) {
+    message = message + ' | Trace: ' + err.stack;
+  }
+
+  sendError(res, statusCode, message);
 };
 
 module.exports = globalErrorhandler;

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { THttpResponse } from '../types';
-import logger from './logger';
-import config from '../config';
-import { EApplicationEnvironment } from '../constants/application';
+import { THttpResponse } from '../types/index.js';
+import logger from './logger.js';
+import config from '../config/index.js';
+import { EApplicationEnvironment } from '../constants/application.js';
 
 export default (req: Request, res: Response, responseStatusCode: number, responseMessage: string, data: unknown = null): void => {
   const response: THttpResponse = {

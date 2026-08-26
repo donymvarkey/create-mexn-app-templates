@@ -1,9 +1,9 @@
 import { Request } from 'express';
-import { THttpError } from '../types';
-import responseMessage from '../constants/responseMessage';
-import logger from './logger';
-import { EApplicationEnvironment } from '../constants/application';
-import config from '../config';
+import { THttpError } from '../types/index.js';
+import responseMessages from '../constants/responseMessages.js';
+import logger from './logger.js';
+import { EApplicationEnvironment } from '../constants/application.js';
+import config from '../config/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export default (err: Error | unknown, req: Request, errorStatusCode: number = 500): THttpError => {
@@ -15,7 +15,7 @@ export default (err: Error | unknown, req: Request, errorStatusCode: number = 50
       method: req.method,
       url: req.originalUrl
     },
-    message: err instanceof Error ? err.message || responseMessage.SOMETHING_WENT_WRONG : responseMessage.SOMETHING_WENT_WRONG,
+    message: err instanceof Error ? err.message || responseMessages.SOMETHING_WENT_WRONG : responseMessages.SOMETHING_WENT_WRONG,
     data: null,
     trace: err instanceof Error ? { error: err.stack } : null
   };

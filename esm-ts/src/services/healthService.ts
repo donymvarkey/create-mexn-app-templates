@@ -1,4 +1,4 @@
-import { getApplicationHealth, getSystemHealth } from '../utils/common';
+import { getApplicationHealth, getSystemHealth } from '../utils/common.js';
 
 export const getServerHealthDetails = () => {
   return {

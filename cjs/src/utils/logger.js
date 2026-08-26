@@ -54,20 +54,22 @@ const consoleTransport = () => {
     ];
   }
 
-  return [];
+  return [
+    new transports.Console({
+      level: 'info',
+      format: format.combine(format.timestamp(), format.json()),
+    }),
+  ];
 };
 
 const fileLogFormat = format.printf((info) => {
-  const { level, message, timestamp, meta } = info;
+  const { level, message, timestamp, meta = {} } = info;
 
-  const logMeta = meta;
   const logData = {
     level: level.toUpperCase(),
-
     message,
-
     timestamp,
-    meta: logMeta,
+    meta,
   };
 
   return JSON.stringify(logData, null, 4);
@@ -76,7 +78,11 @@ const fileLogFormat = format.printf((info) => {
 const FileTransport = () => {
   return [
     new transports.File({
-      filename: path.join(__dirname, '../', '../', 'logs', `${config.env}.log`),
+      filename: path.join(
+        process.cwd(),
+        'logs',
+        `${config.env || 'development'}.log`,
+      ),
       level: 'info',
       format: format.combine(format.timestamp(), fileLogFormat),
     }),

@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Server (Dev)",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx", "watch", "index.ts"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "restart": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Vitest Tests",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vitest", "run"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import os from 'os';
-import config from '../config';
+import config from '../config/index.js';
 
 export const getApplicationHealth = () => {
   return {

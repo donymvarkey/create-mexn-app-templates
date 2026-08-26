@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cjs_app
+    restart: unless-stopped
+    ports:
+      - '${PORT:-8000}:8000'
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      - SERVER_URL=http://localhost:8000
+      - SECRET=${SECRET:-super_secret_key}
+      - DATABASE_URL=mongodb://mongodb:27017/mexn_db
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  mongodb:
+    image: mongo:7-jammy
+    container_name: cjs_mongodb
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  mongo_data:
